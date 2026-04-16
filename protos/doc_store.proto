@@ -1,0 +1,70 @@
+syntax = "proto3"; 
+
+package doc_store_api;
+
+option go_package = "github.com/VlanAni/nosql_over_postgres/internal/docstoreAPI";
+
+service DocumentStore {
+    rpc CreateDocument (CreateRequest) returns (CreateResponse);
+    rpc InsertDocument (InsertRequest) returns (InsertResponse);
+    rpc GetDocument (GetRequest) returns (GetResponse); 
+    rpc DeleteDocument (DeleteRequest) returns (DeleteResponse); 
+}
+
+// doc_name - имя создаваемой сущности 
+// description - json-объект описание полей и типов 
+message CreateRequest {
+    string doc_name = 1;
+    string description = 2; 
+}
+
+// doc_name - имя сущности 
+// success - булевый результат операции
+message CreateResponse {
+    string doc_name = 1;
+}
+
+// doc_name - имя сущности (для маршрутизации по таблицам) 
+// item - json-сущность с конкретными значениями
+message InsertRequest {
+    string doc_name = 1; 
+    string item = 2; 
+}
+
+// doc_name - имя сущности 
+// success - успех или неуспех операциии 
+// id - идентификатор вставленного элемента (string выбрал для универсальности)
+message InsertResponse {
+    string doc_name = 1; 
+    string id = 2;
+}
+
+// doc_name - имя документа 
+// requirements - json-строка с полями и значениями полей, по которым нужно фильтровать
+message GetRequest {
+    string doc_name = 1; 
+    string requirements = 2; 
+}
+
+// doc_name - имя документа 
+// success - результат операции 
+// items - список json-ов документов 
+message GetResponse {
+    string doc_name = 1;
+    repeated string items = 2; 
+}
+
+// doc_name - имя документа 
+// target - json-строка с полями и значениями полей, по которым нужно удалять элементы 
+message DeleteRequest {
+    string doc_name = 1; 
+    string target = 2; 
+}
+
+// doc_name - имя документа 
+// success - результат операции 
+// ids - список id удалённых документов
+message DeleteResponse {
+    string doc_name = 1;
+    repeated string ids = 2;
+}
