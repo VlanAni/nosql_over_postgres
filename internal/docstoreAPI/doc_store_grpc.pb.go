@@ -2,7 +2,7 @@
 // versions:
 // - protoc-gen-go-grpc v1.6.1
 // - protoc             v7.34.1
-// source: doc_store.proto
+// source: protos/doc_store.proto
 
 package docstoreAPI
 
@@ -19,20 +19,18 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DocumentStore_CreateDocument_FullMethodName = "/doc_store_api.DocumentStore/CreateDocument"
-	DocumentStore_InsertDocument_FullMethodName = "/doc_store_api.DocumentStore/InsertDocument"
-	DocumentStore_GetDocument_FullMethodName    = "/doc_store_api.DocumentStore/GetDocument"
+	DocumentStore_PutDocument_FullMethodName    = "/doc_store_api.DocumentStore/PutDocument"
 	DocumentStore_DeleteDocument_FullMethodName = "/doc_store_api.DocumentStore/DeleteDocument"
+	DocumentStore_GetDocument_FullMethodName    = "/doc_store_api.DocumentStore/GetDocument"
 )
 
 // DocumentStoreClient is the client API for DocumentStore service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DocumentStoreClient interface {
-	CreateDocument(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error)
-	InsertDocument(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*InsertResponse, error)
-	GetDocument(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
+	PutDocument(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error)
 	DeleteDocument(ctx context.Context, in *DeleteRequest, opts ...grpc.CallOption) (*DeleteResponse, error)
+	GetDocument(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error)
 }
 
 type documentStoreClient struct {
@@ -43,30 +41,10 @@ func NewDocumentStoreClient(cc grpc.ClientConnInterface) DocumentStoreClient {
 	return &documentStoreClient{cc}
 }
 
-func (c *documentStoreClient) CreateDocument(ctx context.Context, in *CreateRequest, opts ...grpc.CallOption) (*CreateResponse, error) {
+func (c *documentStoreClient) PutDocument(ctx context.Context, in *PutRequest, opts ...grpc.CallOption) (*PutResponse, error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(CreateResponse)
-	err := c.cc.Invoke(ctx, DocumentStore_CreateDocument_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *documentStoreClient) InsertDocument(ctx context.Context, in *InsertRequest, opts ...grpc.CallOption) (*InsertResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(InsertResponse)
-	err := c.cc.Invoke(ctx, DocumentStore_InsertDocument_FullMethodName, in, out, cOpts...)
-	if err != nil {
-		return nil, err
-	}
-	return out, nil
-}
-
-func (c *documentStoreClient) GetDocument(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
-	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
-	out := new(GetResponse)
-	err := c.cc.Invoke(ctx, DocumentStore_GetDocument_FullMethodName, in, out, cOpts...)
+	out := new(PutResponse)
+	err := c.cc.Invoke(ctx, DocumentStore_PutDocument_FullMethodName, in, out, cOpts...)
 	if err != nil {
 		return nil, err
 	}
@@ -83,14 +61,23 @@ func (c *documentStoreClient) DeleteDocument(ctx context.Context, in *DeleteRequ
 	return out, nil
 }
 
+func (c *documentStoreClient) GetDocument(ctx context.Context, in *GetRequest, opts ...grpc.CallOption) (*GetResponse, error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	out := new(GetResponse)
+	err := c.cc.Invoke(ctx, DocumentStore_GetDocument_FullMethodName, in, out, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // DocumentStoreServer is the server API for DocumentStore service.
 // All implementations must embed UnimplementedDocumentStoreServer
 // for forward compatibility.
 type DocumentStoreServer interface {
-	CreateDocument(context.Context, *CreateRequest) (*CreateResponse, error)
-	InsertDocument(context.Context, *InsertRequest) (*InsertResponse, error)
-	GetDocument(context.Context, *GetRequest) (*GetResponse, error)
+	PutDocument(context.Context, *PutRequest) (*PutResponse, error)
 	DeleteDocument(context.Context, *DeleteRequest) (*DeleteResponse, error)
+	GetDocument(context.Context, *GetRequest) (*GetResponse, error)
 	mustEmbedUnimplementedDocumentStoreServer()
 }
 
@@ -101,17 +88,14 @@ type DocumentStoreServer interface {
 // pointer dereference when methods are called.
 type UnimplementedDocumentStoreServer struct{}
 
-func (UnimplementedDocumentStoreServer) CreateDocument(context.Context, *CreateRequest) (*CreateResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method CreateDocument not implemented")
-}
-func (UnimplementedDocumentStoreServer) InsertDocument(context.Context, *InsertRequest) (*InsertResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method InsertDocument not implemented")
-}
-func (UnimplementedDocumentStoreServer) GetDocument(context.Context, *GetRequest) (*GetResponse, error) {
-	return nil, status.Error(codes.Unimplemented, "method GetDocument not implemented")
+func (UnimplementedDocumentStoreServer) PutDocument(context.Context, *PutRequest) (*PutResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method PutDocument not implemented")
 }
 func (UnimplementedDocumentStoreServer) DeleteDocument(context.Context, *DeleteRequest) (*DeleteResponse, error) {
 	return nil, status.Error(codes.Unimplemented, "method DeleteDocument not implemented")
+}
+func (UnimplementedDocumentStoreServer) GetDocument(context.Context, *GetRequest) (*GetResponse, error) {
+	return nil, status.Error(codes.Unimplemented, "method GetDocument not implemented")
 }
 func (UnimplementedDocumentStoreServer) mustEmbedUnimplementedDocumentStoreServer() {}
 func (UnimplementedDocumentStoreServer) testEmbeddedByValue()                       {}
@@ -134,56 +118,20 @@ func RegisterDocumentStoreServer(s grpc.ServiceRegistrar, srv DocumentStoreServe
 	s.RegisterService(&DocumentStore_ServiceDesc, srv)
 }
 
-func _DocumentStore_CreateDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(CreateRequest)
+func _DocumentStore_PutDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(PutRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(DocumentStoreServer).CreateDocument(ctx, in)
+		return srv.(DocumentStoreServer).PutDocument(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: DocumentStore_CreateDocument_FullMethodName,
+		FullMethod: DocumentStore_PutDocument_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DocumentStoreServer).CreateDocument(ctx, req.(*CreateRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DocumentStore_InsertDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(InsertRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DocumentStoreServer).InsertDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DocumentStore_InsertDocument_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DocumentStoreServer).InsertDocument(ctx, req.(*InsertRequest))
-	}
-	return interceptor(ctx, in, info, handler)
-}
-
-func _DocumentStore_GetDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(GetRequest)
-	if err := dec(in); err != nil {
-		return nil, err
-	}
-	if interceptor == nil {
-		return srv.(DocumentStoreServer).GetDocument(ctx, in)
-	}
-	info := &grpc.UnaryServerInfo{
-		Server:     srv,
-		FullMethod: DocumentStore_GetDocument_FullMethodName,
-	}
-	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(DocumentStoreServer).GetDocument(ctx, req.(*GetRequest))
+		return srv.(DocumentStoreServer).PutDocument(ctx, req.(*PutRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
@@ -206,6 +154,24 @@ func _DocumentStore_DeleteDocument_Handler(srv interface{}, ctx context.Context,
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DocumentStore_GetDocument_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(GetRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(DocumentStoreServer).GetDocument(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: DocumentStore_GetDocument_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(DocumentStoreServer).GetDocument(ctx, req.(*GetRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // DocumentStore_ServiceDesc is the grpc.ServiceDesc for DocumentStore service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -214,22 +180,18 @@ var DocumentStore_ServiceDesc = grpc.ServiceDesc{
 	HandlerType: (*DocumentStoreServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
-			MethodName: "CreateDocument",
-			Handler:    _DocumentStore_CreateDocument_Handler,
-		},
-		{
-			MethodName: "InsertDocument",
-			Handler:    _DocumentStore_InsertDocument_Handler,
-		},
-		{
-			MethodName: "GetDocument",
-			Handler:    _DocumentStore_GetDocument_Handler,
+			MethodName: "PutDocument",
+			Handler:    _DocumentStore_PutDocument_Handler,
 		},
 		{
 			MethodName: "DeleteDocument",
 			Handler:    _DocumentStore_DeleteDocument_Handler,
 		},
+		{
+			MethodName: "GetDocument",
+			Handler:    _DocumentStore_GetDocument_Handler,
+		},
 	},
 	Streams:  []grpc.StreamDesc{},
-	Metadata: "doc_store.proto",
+	Metadata: "protos/doc_store.proto",
 }

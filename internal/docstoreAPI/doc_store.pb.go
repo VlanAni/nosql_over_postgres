@@ -2,7 +2,7 @@
 // versions:
 // 	protoc-gen-go v1.36.11
 // 	protoc        v7.34.1
-// source: doc_store.proto
+// source: protos/doc_store.proto
 
 package docstoreAPI
 
@@ -21,31 +21,31 @@ const (
 	_ = protoimpl.EnforceVersion(protoimpl.MaxVersion - 20)
 )
 
-// doc_name - имя создаваемой сущности
-// description - json-объект описание полей и типов
-type CreateRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Description   string                 `protobuf:"bytes,2,opt,name=description,proto3" json:"description,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+// document and payload for it
+type PutRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	Payload        []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
-func (x *CreateRequest) Reset() {
-	*x = CreateRequest{}
-	mi := &file_doc_store_proto_msgTypes[0]
+func (x *PutRequest) Reset() {
+	*x = PutRequest{}
+	mi := &file_protos_doc_store_proto_msgTypes[0]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
 
-func (x *CreateRequest) String() string {
+func (x *PutRequest) String() string {
 	return protoimpl.X.MessageStringOf(x)
 }
 
-func (*CreateRequest) ProtoMessage() {}
+func (*PutRequest) ProtoMessage() {}
 
-func (x *CreateRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[0]
+func (x *PutRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_doc_store_proto_msgTypes[0]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -56,302 +56,97 @@ func (x *CreateRequest) ProtoReflect() protoreflect.Message {
 	return mi.MessageOf(x)
 }
 
-// Deprecated: Use CreateRequest.ProtoReflect.Descriptor instead.
-func (*CreateRequest) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{0}
+// Deprecated: Use PutRequest.ProtoReflect.Descriptor instead.
+func (*PutRequest) Descriptor() ([]byte, []int) {
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{0}
 }
 
-func (x *CreateRequest) GetDocName() string {
+func (x *PutRequest) GetCollectionName() string {
 	if x != nil {
-		return x.DocName
+		return x.CollectionName
 	}
 	return ""
 }
 
-func (x *CreateRequest) GetDescription() string {
+func (x *PutRequest) GetDocId() string {
 	if x != nil {
-		return x.Description
+		return x.DocId
 	}
 	return ""
 }
 
-// doc_name - имя сущности
-// success - булевый результат операции
-type CreateResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *CreateResponse) Reset() {
-	*x = CreateResponse{}
-	mi := &file_doc_store_proto_msgTypes[1]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *CreateResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*CreateResponse) ProtoMessage() {}
-
-func (x *CreateResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[1]
+func (x *PutRequest) GetPayload() []byte {
 	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use CreateResponse.ProtoReflect.Descriptor instead.
-func (*CreateResponse) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{1}
-}
-
-func (x *CreateResponse) GetDocName() string {
-	if x != nil {
-		return x.DocName
-	}
-	return ""
-}
-
-// doc_name - имя сущности (для маршрутизации по таблицам)
-// item - json-сущность с конкретными значениями
-type InsertRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Item          string                 `protobuf:"bytes,2,opt,name=item,proto3" json:"item,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InsertRequest) Reset() {
-	*x = InsertRequest{}
-	mi := &file_doc_store_proto_msgTypes[2]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InsertRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InsertRequest) ProtoMessage() {}
-
-func (x *InsertRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[2]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InsertRequest.ProtoReflect.Descriptor instead.
-func (*InsertRequest) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{2}
-}
-
-func (x *InsertRequest) GetDocName() string {
-	if x != nil {
-		return x.DocName
-	}
-	return ""
-}
-
-func (x *InsertRequest) GetItem() string {
-	if x != nil {
-		return x.Item
-	}
-	return ""
-}
-
-// doc_name - имя сущности
-// success - успех или неуспех операциии
-// id - идентификатор вставленного элемента (string выбрал для универсальности)
-type InsertResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Id            string                 `protobuf:"bytes,2,opt,name=id,proto3" json:"id,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *InsertResponse) Reset() {
-	*x = InsertResponse{}
-	mi := &file_doc_store_proto_msgTypes[3]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *InsertResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*InsertResponse) ProtoMessage() {}
-
-func (x *InsertResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[3]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use InsertResponse.ProtoReflect.Descriptor instead.
-func (*InsertResponse) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{3}
-}
-
-func (x *InsertResponse) GetDocName() string {
-	if x != nil {
-		return x.DocName
-	}
-	return ""
-}
-
-func (x *InsertResponse) GetId() string {
-	if x != nil {
-		return x.Id
-	}
-	return ""
-}
-
-// doc_name - имя документа
-// requirements - json-строка с полями и значениями полей, по которым нужно фильтровать
-type GetRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Requirements  string                 `protobuf:"bytes,2,opt,name=requirements,proto3" json:"requirements,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetRequest) Reset() {
-	*x = GetRequest{}
-	mi := &file_doc_store_proto_msgTypes[4]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetRequest) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetRequest) ProtoMessage() {}
-
-func (x *GetRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[4]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
-func (*GetRequest) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{4}
-}
-
-func (x *GetRequest) GetDocName() string {
-	if x != nil {
-		return x.DocName
-	}
-	return ""
-}
-
-func (x *GetRequest) GetRequirements() string {
-	if x != nil {
-		return x.Requirements
-	}
-	return ""
-}
-
-// doc_name - имя документа
-// success - результат операции
-// items - список json-ов документов
-type GetResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Items         []string               `protobuf:"bytes,2,rep,name=items,proto3" json:"items,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
-}
-
-func (x *GetResponse) Reset() {
-	*x = GetResponse{}
-	mi := &file_doc_store_proto_msgTypes[5]
-	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-	ms.StoreMessageInfo(mi)
-}
-
-func (x *GetResponse) String() string {
-	return protoimpl.X.MessageStringOf(x)
-}
-
-func (*GetResponse) ProtoMessage() {}
-
-func (x *GetResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[5]
-	if x != nil {
-		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
-		if ms.LoadMessageInfo() == nil {
-			ms.StoreMessageInfo(mi)
-		}
-		return ms
-	}
-	return mi.MessageOf(x)
-}
-
-// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
-func (*GetResponse) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{5}
-}
-
-func (x *GetResponse) GetDocName() string {
-	if x != nil {
-		return x.DocName
-	}
-	return ""
-}
-
-func (x *GetResponse) GetItems() []string {
-	if x != nil {
-		return x.Items
+		return x.Payload
 	}
 	return nil
 }
 
-// doc_name - имя документа
-// target - json-строка с полями и значениями полей, по которым нужно удалять элементы
+// id of the downloaded document
+type PutResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *PutResponse) Reset() {
+	*x = PutResponse{}
+	mi := &file_protos_doc_store_proto_msgTypes[1]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *PutResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*PutResponse) ProtoMessage() {}
+
+func (x *PutResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_doc_store_proto_msgTypes[1]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use PutResponse.ProtoReflect.Descriptor instead.
+func (*PutResponse) Descriptor() ([]byte, []int) {
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{1}
+}
+
+func (x *PutResponse) GetCollectionName() string {
+	if x != nil {
+		return x.CollectionName
+	}
+	return ""
+}
+
+func (x *PutResponse) GetDocId() string {
+	if x != nil {
+		return x.DocId
+	}
+	return ""
+}
+
+// id of the document to delete
 type DeleteRequest struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Target        string                 `protobuf:"bytes,2,opt,name=target,proto3" json:"target,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *DeleteRequest) Reset() {
 	*x = DeleteRequest{}
-	mi := &file_doc_store_proto_msgTypes[6]
+	mi := &file_protos_doc_store_proto_msgTypes[2]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -363,7 +158,7 @@ func (x *DeleteRequest) String() string {
 func (*DeleteRequest) ProtoMessage() {}
 
 func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[6]
+	mi := &file_protos_doc_store_proto_msgTypes[2]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -376,37 +171,35 @@ func (x *DeleteRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteRequest.ProtoReflect.Descriptor instead.
 func (*DeleteRequest) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{6}
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{2}
 }
 
-func (x *DeleteRequest) GetDocName() string {
+func (x *DeleteRequest) GetCollectionName() string {
 	if x != nil {
-		return x.DocName
+		return x.CollectionName
 	}
 	return ""
 }
 
-func (x *DeleteRequest) GetTarget() string {
+func (x *DeleteRequest) GetDocId() string {
 	if x != nil {
-		return x.Target
+		return x.DocId
 	}
 	return ""
 }
 
-// doc_name - имя документа
-// success - результат операции
-// ids - список id удалённых документов
+// id of the deleted document
 type DeleteResponse struct {
-	state         protoimpl.MessageState `protogen:"open.v1"`
-	DocName       string                 `protobuf:"bytes,1,opt,name=doc_name,json=docName,proto3" json:"doc_name,omitempty"`
-	Ids           []string               `protobuf:"bytes,2,rep,name=ids,proto3" json:"ids,omitempty"`
-	unknownFields protoimpl.UnknownFields
-	sizeCache     protoimpl.SizeCache
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
 }
 
 func (x *DeleteResponse) Reset() {
 	*x = DeleteResponse{}
-	mi := &file_doc_store_proto_msgTypes[7]
+	mi := &file_protos_doc_store_proto_msgTypes[3]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -418,7 +211,7 @@ func (x *DeleteResponse) String() string {
 func (*DeleteResponse) ProtoMessage() {}
 
 func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_doc_store_proto_msgTypes[7]
+	mi := &file_protos_doc_store_proto_msgTypes[3]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -431,117 +224,224 @@ func (x *DeleteResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteResponse.ProtoReflect.Descriptor instead.
 func (*DeleteResponse) Descriptor() ([]byte, []int) {
-	return file_doc_store_proto_rawDescGZIP(), []int{7}
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{3}
 }
 
-func (x *DeleteResponse) GetDocName() string {
+func (x *DeleteResponse) GetCollectionName() string {
 	if x != nil {
-		return x.DocName
+		return x.CollectionName
 	}
 	return ""
 }
 
-func (x *DeleteResponse) GetIds() []string {
+func (x *DeleteResponse) GetDocId() string {
 	if x != nil {
-		return x.Ids
+		return x.DocId
+	}
+	return ""
+}
+
+// id of the document to get
+type GetRequest struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetRequest) Reset() {
+	*x = GetRequest{}
+	mi := &file_protos_doc_store_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetRequest) ProtoMessage() {}
+
+func (x *GetRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_doc_store_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetRequest.ProtoReflect.Descriptor instead.
+func (*GetRequest) Descriptor() ([]byte, []int) {
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *GetRequest) GetCollectionName() string {
+	if x != nil {
+		return x.CollectionName
+	}
+	return ""
+}
+
+func (x *GetRequest) GetDocId() string {
+	if x != nil {
+		return x.DocId
+	}
+	return ""
+}
+
+// payload of the retrieved document
+type GetResponse struct {
+	state          protoimpl.MessageState `protogen:"open.v1"`
+	CollectionName string                 `protobuf:"bytes,1,opt,name=collection_name,json=collectionName,proto3" json:"collection_name,omitempty"`
+	DocId          string                 `protobuf:"bytes,2,opt,name=doc_id,json=docId,proto3" json:"doc_id,omitempty"`
+	Payload        []byte                 `protobuf:"bytes,3,opt,name=payload,proto3" json:"payload,omitempty"`
+	unknownFields  protoimpl.UnknownFields
+	sizeCache      protoimpl.SizeCache
+}
+
+func (x *GetResponse) Reset() {
+	*x = GetResponse{}
+	mi := &file_protos_doc_store_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *GetResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*GetResponse) ProtoMessage() {}
+
+func (x *GetResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_protos_doc_store_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use GetResponse.ProtoReflect.Descriptor instead.
+func (*GetResponse) Descriptor() ([]byte, []int) {
+	return file_protos_doc_store_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *GetResponse) GetCollectionName() string {
+	if x != nil {
+		return x.CollectionName
+	}
+	return ""
+}
+
+func (x *GetResponse) GetDocId() string {
+	if x != nil {
+		return x.DocId
+	}
+	return ""
+}
+
+func (x *GetResponse) GetPayload() []byte {
+	if x != nil {
+		return x.Payload
 	}
 	return nil
 }
 
-var File_doc_store_proto protoreflect.FileDescriptor
+var File_protos_doc_store_proto protoreflect.FileDescriptor
 
-const file_doc_store_proto_rawDesc = "" +
+const file_protos_doc_store_proto_rawDesc = "" +
 	"\n" +
-	"\x0fdoc_store.proto\x12\rdoc_store_api\"L\n" +
-	"\rCreateRequest\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12 \n" +
-	"\vdescription\x18\x02 \x01(\tR\vdescription\"+\n" +
-	"\x0eCreateResponse\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\">\n" +
-	"\rInsertRequest\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\x12\n" +
-	"\x04item\x18\x02 \x01(\tR\x04item\";\n" +
-	"\x0eInsertResponse\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\x0e\n" +
-	"\x02id\x18\x02 \x01(\tR\x02id\"K\n" +
+	"\x16protos/doc_store.proto\x12\rdoc_store_api\"f\n" +
 	"\n" +
-	"GetRequest\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\"\n" +
-	"\frequirements\x18\x02 \x01(\tR\frequirements\">\n" +
-	"\vGetResponse\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\x14\n" +
-	"\x05items\x18\x02 \x03(\tR\x05items\"B\n" +
-	"\rDeleteRequest\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\x16\n" +
-	"\x06target\x18\x02 \x01(\tR\x06target\"=\n" +
-	"\x0eDeleteResponse\x12\x19\n" +
-	"\bdoc_name\x18\x01 \x01(\tR\adocName\x12\x10\n" +
-	"\x03ids\x18\x02 \x03(\tR\x03ids2\xc2\x02\n" +
-	"\rDocumentStore\x12M\n" +
-	"\x0eCreateDocument\x12\x1c.doc_store_api.CreateRequest\x1a\x1d.doc_store_api.CreateResponse\x12M\n" +
-	"\x0eInsertDocument\x12\x1c.doc_store_api.InsertRequest\x1a\x1d.doc_store_api.InsertResponse\x12D\n" +
-	"\vGetDocument\x12\x19.doc_store_api.GetRequest\x1a\x1a.doc_store_api.GetResponse\x12M\n" +
-	"\x0eDeleteDocument\x12\x1c.doc_store_api.DeleteRequest\x1a\x1d.doc_store_api.DeleteResponseB=Z;github.com/VlanAni/nosql_over_postgres/internal/docstoreAPIb\x06proto3"
+	"PutRequest\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\x12\x18\n" +
+	"\apayload\x18\x03 \x01(\fR\apayload\"M\n" +
+	"\vPutResponse\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\"O\n" +
+	"\rDeleteRequest\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\"P\n" +
+	"\x0eDeleteResponse\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\"L\n" +
+	"\n" +
+	"GetRequest\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\"g\n" +
+	"\vGetResponse\x12'\n" +
+	"\x0fcollection_name\x18\x01 \x01(\tR\x0ecollectionName\x12\x15\n" +
+	"\x06doc_id\x18\x02 \x01(\tR\x05docId\x12\x18\n" +
+	"\apayload\x18\x03 \x01(\fR\apayload2\xea\x01\n" +
+	"\rDocumentStore\x12D\n" +
+	"\vPutDocument\x12\x19.doc_store_api.PutRequest\x1a\x1a.doc_store_api.PutResponse\x12M\n" +
+	"\x0eDeleteDocument\x12\x1c.doc_store_api.DeleteRequest\x1a\x1d.doc_store_api.DeleteResponse\x12D\n" +
+	"\vGetDocument\x12\x19.doc_store_api.GetRequest\x1a\x1a.doc_store_api.GetResponseB=Z;github.com/VlanAni/nosql_over_postgres/internal/docstoreAPIb\x06proto3"
 
 var (
-	file_doc_store_proto_rawDescOnce sync.Once
-	file_doc_store_proto_rawDescData []byte
+	file_protos_doc_store_proto_rawDescOnce sync.Once
+	file_protos_doc_store_proto_rawDescData []byte
 )
 
-func file_doc_store_proto_rawDescGZIP() []byte {
-	file_doc_store_proto_rawDescOnce.Do(func() {
-		file_doc_store_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_doc_store_proto_rawDesc), len(file_doc_store_proto_rawDesc)))
+func file_protos_doc_store_proto_rawDescGZIP() []byte {
+	file_protos_doc_store_proto_rawDescOnce.Do(func() {
+		file_protos_doc_store_proto_rawDescData = protoimpl.X.CompressGZIP(unsafe.Slice(unsafe.StringData(file_protos_doc_store_proto_rawDesc), len(file_protos_doc_store_proto_rawDesc)))
 	})
-	return file_doc_store_proto_rawDescData
+	return file_protos_doc_store_proto_rawDescData
 }
 
-var file_doc_store_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
-var file_doc_store_proto_goTypes = []any{
-	(*CreateRequest)(nil),  // 0: doc_store_api.CreateRequest
-	(*CreateResponse)(nil), // 1: doc_store_api.CreateResponse
-	(*InsertRequest)(nil),  // 2: doc_store_api.InsertRequest
-	(*InsertResponse)(nil), // 3: doc_store_api.InsertResponse
+var file_protos_doc_store_proto_msgTypes = make([]protoimpl.MessageInfo, 6)
+var file_protos_doc_store_proto_goTypes = []any{
+	(*PutRequest)(nil),     // 0: doc_store_api.PutRequest
+	(*PutResponse)(nil),    // 1: doc_store_api.PutResponse
+	(*DeleteRequest)(nil),  // 2: doc_store_api.DeleteRequest
+	(*DeleteResponse)(nil), // 3: doc_store_api.DeleteResponse
 	(*GetRequest)(nil),     // 4: doc_store_api.GetRequest
 	(*GetResponse)(nil),    // 5: doc_store_api.GetResponse
-	(*DeleteRequest)(nil),  // 6: doc_store_api.DeleteRequest
-	(*DeleteResponse)(nil), // 7: doc_store_api.DeleteResponse
 }
-var file_doc_store_proto_depIdxs = []int32{
-	0, // 0: doc_store_api.DocumentStore.CreateDocument:input_type -> doc_store_api.CreateRequest
-	2, // 1: doc_store_api.DocumentStore.InsertDocument:input_type -> doc_store_api.InsertRequest
+var file_protos_doc_store_proto_depIdxs = []int32{
+	0, // 0: doc_store_api.DocumentStore.PutDocument:input_type -> doc_store_api.PutRequest
+	2, // 1: doc_store_api.DocumentStore.DeleteDocument:input_type -> doc_store_api.DeleteRequest
 	4, // 2: doc_store_api.DocumentStore.GetDocument:input_type -> doc_store_api.GetRequest
-	6, // 3: doc_store_api.DocumentStore.DeleteDocument:input_type -> doc_store_api.DeleteRequest
-	1, // 4: doc_store_api.DocumentStore.CreateDocument:output_type -> doc_store_api.CreateResponse
-	3, // 5: doc_store_api.DocumentStore.InsertDocument:output_type -> doc_store_api.InsertResponse
-	5, // 6: doc_store_api.DocumentStore.GetDocument:output_type -> doc_store_api.GetResponse
-	7, // 7: doc_store_api.DocumentStore.DeleteDocument:output_type -> doc_store_api.DeleteResponse
-	4, // [4:8] is the sub-list for method output_type
-	0, // [0:4] is the sub-list for method input_type
+	1, // 3: doc_store_api.DocumentStore.PutDocument:output_type -> doc_store_api.PutResponse
+	3, // 4: doc_store_api.DocumentStore.DeleteDocument:output_type -> doc_store_api.DeleteResponse
+	5, // 5: doc_store_api.DocumentStore.GetDocument:output_type -> doc_store_api.GetResponse
+	3, // [3:6] is the sub-list for method output_type
+	0, // [0:3] is the sub-list for method input_type
 	0, // [0:0] is the sub-list for extension type_name
 	0, // [0:0] is the sub-list for extension extendee
 	0, // [0:0] is the sub-list for field type_name
 }
 
-func init() { file_doc_store_proto_init() }
-func file_doc_store_proto_init() {
-	if File_doc_store_proto != nil {
+func init() { file_protos_doc_store_proto_init() }
+func file_protos_doc_store_proto_init() {
+	if File_protos_doc_store_proto != nil {
 		return
 	}
 	type x struct{}
 	out := protoimpl.TypeBuilder{
 		File: protoimpl.DescBuilder{
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
-			RawDescriptor: unsafe.Slice(unsafe.StringData(file_doc_store_proto_rawDesc), len(file_doc_store_proto_rawDesc)),
+			RawDescriptor: unsafe.Slice(unsafe.StringData(file_protos_doc_store_proto_rawDesc), len(file_protos_doc_store_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   6,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
-		GoTypes:           file_doc_store_proto_goTypes,
-		DependencyIndexes: file_doc_store_proto_depIdxs,
-		MessageInfos:      file_doc_store_proto_msgTypes,
+		GoTypes:           file_protos_doc_store_proto_goTypes,
+		DependencyIndexes: file_protos_doc_store_proto_depIdxs,
+		MessageInfos:      file_protos_doc_store_proto_msgTypes,
 	}.Build()
-	File_doc_store_proto = out.File
-	file_doc_store_proto_goTypes = nil
-	file_doc_store_proto_depIdxs = nil
+	File_protos_doc_store_proto = out.File
+	file_protos_doc_store_proto_goTypes = nil
+	file_protos_doc_store_proto_depIdxs = nil
 }
