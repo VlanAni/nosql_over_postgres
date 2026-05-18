@@ -9,7 +9,7 @@ import (
 )
 
 func (s *Service) Put(ctx context.Context, collectionName, id string, payload []byte) error {
-	if payload == nil || len(payload) == 0 {
+	if len(payload) == 0 {
 		return fmt.Errorf("incorrect payload")
 	}
 
